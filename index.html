@@ -18,13 +18,16 @@
         :root {
             --bg-primary: #0a0a0a;
             --bg-card: #141414;
+            --bg-card-border: #1f1f1f;
             --text-primary: #f5f5f5;
             --text-secondary: #a0a0a0;
+            --text-muted: #666666;
             --accent: #FFD100;
             --accent-hover: #ffe04a;
             --accent-dim: rgba(255, 209, 0, 0.10);
             --border: rgba(255,255,255,0.08);
             --radius: 14px;
+            --radius-sm: 10px;
         }
 
         body {
@@ -40,28 +43,47 @@
 
         .tap-container {
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-bottom: 40px;
         }
 
         /* ── HEADER ── */
         .header {
             position: relative;
-            padding: 48px 24px 32px;
+            padding: 48px 24px 9px;
             text-align: center;
             background: linear-gradient(180deg, rgba(255,209,0,0.05) 0%, transparent 100%);
         }
 
-        .header::after {
+        .header-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .header-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .header-banner::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 24px;
-            right: 24px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--bg-primary));
+            pointer-events: none;
         }
 
         .avatar {
@@ -77,6 +99,8 @@
             background: var(--bg-primary);
             box-shadow: 0 0 30px rgba(255,209,0,0.12);
             animation: pulseGlow 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
         }
 
         @keyframes pulseGlow {
@@ -96,6 +120,8 @@
             font-weight: 700;
             letter-spacing: -0.3px;
             margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
         }
 
         .tagline {
@@ -103,6 +129,52 @@
             font-weight: 400;
             color: var(--text-secondary);
             letter-spacing: 0.3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── STATS ── */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin: 24px 24px 0;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 18px 8px;
+            position: relative;
+        }
+
+        .stat:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: var(--bg-card-border);
+        }
+
+        .stat-number {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
         }
 
         /* ── SOCIAL ICONS ── */
@@ -110,15 +182,26 @@
             display: flex;
             justify-content: center;
             gap: 12px;
-            padding: 22px 24px 6px;
+            padding: 24px 24px 20px;
+            position: relative;
+        }
+
+        .social-row::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
         }
 
         .social-icon {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--bg-card-border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -127,217 +210,71 @@
         }
 
         .social-icon:hover {
-            background: var(--accent-dim);
+            background: var(--accent);
             border-color: var(--accent);
             transform: translateY(-2px);
         }
 
         .social-icon svg {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             fill: var(--text-secondary);
             transition: fill 0.25s ease;
         }
 
         .social-icon:hover svg {
-            fill: var(--accent);
-        }
-
-        /* ── LINKS ── */
-        .links-section {
-            padding: 20px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .link-btn {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,209,0,0.04), transparent);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-
-        .link-btn:hover {
-            border-color: rgba(255,209,0,0.25);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .link-btn:hover::before {
-            opacity: 1;
-        }
-
-        .link-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: var(--accent-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .link-icon svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--accent);
-        }
-
-        .link-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .link-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .link-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        .link-arrow {
-            width: 16px;
-            height: 16px;
-            fill: var(--text-secondary);
-            flex-shrink: 0;
-            transition: all 0.25s ease;
-        }
-
-        .link-btn:hover .link-arrow {
-            transform: translateX(3px);
-            fill: var(--accent);
+            fill: var(--bg-primary);
         }
 
         /* ── PRIMARY CTA ── */
-        .link-btn.cta-primary {
+        .cta-wrapper {
+            padding: 24px 24px 0;
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 16px 24px;
             background: var(--accent);
-            border-color: var(--accent);
-            color: #0a0a0a;
-        }
-
-        .link-btn.cta-primary .link-icon {
-            background: rgba(10,10,10,0.12);
-        }
-
-        .link-btn.cta-primary .link-icon svg {
-            fill: #0a0a0a;
-        }
-
-        .link-btn.cta-primary .link-desc {
-            color: rgba(10,10,10,0.55);
-        }
-
-        .link-btn.cta-primary .link-arrow {
-            fill: rgba(10,10,10,0.35);
-        }
-
-        .link-btn.cta-primary:hover {
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
-            box-shadow: 0 4px 25px rgba(255,209,0,0.25);
-        }
-
-        .link-btn.cta-primary:hover .link-arrow {
-            fill: rgba(10,10,10,0.55);
-        }
-
-        .link-btn.cta-primary::before {
-            display: none;
-        }
-
-        /* ── WHAT WE DO ── */
-        .what-we-do {
-            padding: 8px 24px 20px;
-        }
-
-        .section-label {
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
+            color: var(--bg-primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
             text-align: center;
-            margin-bottom: 14px;
+            border-radius: var(--radius-sm);
+            letter-spacing: 0.01em;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .cta-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(255,209,0,0.2);
         }
 
-        .service-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 14px;
-            transition: border-color 0.25s ease;
-        }
-
-        .service-card:hover {
-            border-color: rgba(255,209,0,0.2);
-        }
-
-        .service-card-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 7px;
-            background: var(--accent-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        .service-card-icon svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--accent);
-        }
-
-        .service-card-title {
-            font-size: 13px;
-            font-weight: 600;
+        .cta-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--bg-card-border);
             color: var(--text-primary);
-            margin-bottom: 4px;
         }
 
-        .service-card-desc {
-            font-size: 11px;
-            line-height: 1.45;
-            color: var(--text-secondary);
-            font-weight: 400;
+        .cta-btn.secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(255,209,0,0.05);
+            box-shadow: none;
         }
 
         /* ── TICKER ── */
         .ticker-section {
             padding: 16px 0 20px;
+            margin-top: 24px;
             overflow: hidden;
             position: relative;
+            border-bottom: 1px solid rgba(255,209,0,0.08);
         }
 
         .ticker-section::before,
@@ -405,7 +342,284 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* ── FOOTER ── */
+        /* ── SECTION HEADERS ── */
+        .section-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.6;
+        }
+
+        /* ── WHAT WE DO ── */
+        .what-we-do {
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+
+        .what-we-do::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,209,0,0.12), transparent);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: rgba(255,209,0,0.3);
+            transform: translateY(-1px);
+        }
+
+        .service-card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .service-card-icon svg {
+            width: 15px;
+            height: 15px;
+            fill: var(--accent);
+        }
+
+        .service-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .service-card-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .service-card-desc {
+            font-size: 11px;
+            line-height: 1.45;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: var(--accent);
+            color: #0a0a0a;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 20px;
+            line-height: 1;
+        }
+
+        .service-card--featured {
+            border-left: 2px solid rgba(255,209,0,0.35);
+        }
+
+        /* ── OUR TEAM ── */
+        .our-team {
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+
+        .our-team::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,209,0,0.12), transparent);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .team-card {
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .team-member-photo {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 8px;
+            display: block;
+            border: 2px solid var(--bg-card-border);
+            background: #1a1a1a;
+            transition: border-color 0.25s ease;
+        }
+
+        .team-card:hover .team-member-photo {
+            border-color: var(--accent);
+        }
+
+        .team-member-name {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+
+        .team-member-title {
+            font-size: 9px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+
+        /* ── EXPLORE ── */
+        .explore-section {
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+
+        .explore-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,209,0,0.12), transparent);
+        }
+
+        .explore-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .explore-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .explore-link:hover {
+            border-color: rgba(255,209,0,0.3);
+            transform: translateX(2px);
+        }
+
+        .explore-link span {
+            color: var(--text-muted);
+            transition: color 0.25s ease;
+        }
+
+        .explore-link:hover span {
+            color: var(--accent);
+        }
+
+        /* ── CONTACT ── */
+        .contact-section {
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 24px;
+            right: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,209,0,0.12), transparent);
+        }
+
+        .contact-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: all 0.25s ease;
+        }
+
+        .contact-item:hover {
+            border-color: rgba(255,209,0,0.3);
+        }
+
+        .contact-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+        }
+
+         /* ── FOOTER ── */
         .footer {
             padding: 28px 24px 36px;
             text-align: center;
@@ -461,20 +675,23 @@
         .footer-sub a:hover {
             color: var(--accent);
         }
-
         /* ── ENTRANCE ANIMATIONS ── */
-        .header, .social-row, .links-section, .what-we-do, .ticker-section, .footer {
+        .hero, .stats, .social-row, .cta-wrapper, .ticker-section, .what-we-do, .our-team, .explore-section, .contact-section, .footer {
             opacity: 0;
             transform: translateY(12px);
             animation: fadeUp 0.5s ease forwards;
         }
 
-        .header { animation-delay: 0.05s; }
+        .hero { animation-delay: 0.05s; }
+        .stats { animation-delay: 0.1s; }
         .social-row { animation-delay: 0.15s; }
+        .cta-wrapper { animation-delay: 0.2s; }
         .ticker-section { animation-delay: 0.25s; }
-        .links-section { animation-delay: 0.35s; }
-        .what-we-do { animation-delay: 0.45s; }
-        .footer { animation-delay: 0.55s; }
+        .what-we-do { animation-delay: 0.35s; }
+        .our-team { animation-delay: 0.45s; }
+        .explore-section { animation-delay: 0.55s; }
+        .contact-section { animation-delay: 0.6s; }
+        .footer { animation-delay: 0.65s; }
 
         @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
@@ -487,8 +704,11 @@
 
     <!-- HEADER -->
     <div class="header">
+        <div class="header-banner">
+            <img src="https://assets.cdn.filesafe.space/HWLkcDtPFyefiPQ26HGp/media/69cd7b7366c8fc5fd2e99517.png" alt="Posted Social Banner">
+        </div>
         <div class="avatar">
-            <img src="https://assets.cdn.filesafe.space/HWLkcDtPFyefiPQ26HGp/media/68d1654ecc2a7974dd9cd68b.png" alt="Posted Social Logo">
+            <img src="https://assets.cdn.filesafe.space/HWLkcDtPFyefiPQ26HGp/media/69bd929b9bd139f545b26ae4.svg" alt="Posted Social Logo">
         </div>
         <div class="brand-name">Posted Social</div>
         <div class="tagline">Modern Marketing For St. Louis Businesses</div>
@@ -514,6 +734,9 @@
         <a href="https://x.com/posted_social" target="_blank" rel="noopener" class="social-icon" aria-label="X">
             <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
+        <a href="https://posted-social.com/" target="_blank" rel="noopener" class="social-icon" aria-label="Website">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </a>
     </div>
 
     <!-- CURRENTLY WORKING ON -->
@@ -535,78 +758,179 @@
         </div>
     </div>
 
-    <!-- LINKS -->
-    <div class="links-section">
-        <a href="https://posted-social.com/partner-with-us/" target="_blank" rel="noopener" class="link-btn cta-primary">
-            <div class="link-icon">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
-            </div>
-            <div class="link-content">
-                <div class="link-title">Apply To Work With Us</div>
-                <div class="link-desc">See if we're the right fit for your brand</div>
-            </div>
-            <svg class="link-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        </a>
-
-        <a href="https://posted-social.com/" target="_blank" rel="noopener" class="link-btn">
-            <div class="link-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-            </div>
-            <div class="link-content">
-                <div class="link-title">Visit Our Website</div>
-                <div class="link-desc">posted-social.com</div>
-            </div>
-            <svg class="link-arrow" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        </a>
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Businesses Served</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">6</div>
+            <div class="stat-label">Focus Areas</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">1</div>
+            <div class="stat-label">Unified Strategy</div>
+        </div>
     </div>
+
+    <!-- PRIMARY CTA -->
+    <div class="cta-wrapper">
+        <a href="https://posted-social.com/partner-with-us/" target="_blank" rel="noopener" class="cta-btn">Apply To Work With Us</a>
+    </div>
+
 
     <!-- WHAT WE DO -->
     <div class="what-we-do">
         <div class="section-label">What We Do</div>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card service-card--featured">
+                <span class="service-badge">Most Popular</span>
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 </div>
-                <div class="service-card-title">Social Media</div>
-                <div class="service-card-desc">Strategy, content & community that actually grows your brand.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">Social Media</div>
+                    <div class="service-card-desc">Strategy, content & community that actually grows your brand.</div>
+                </div>
             </div>
             <div class="service-card">
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6zm0 4h8v2H6zm10-4h2v2h-2zm-6 0h6v2h-6z"/></svg>
                 </div>
-                <div class="service-card-title">Web Design</div>
-                <div class="service-card-desc">Fast, clean sites built to convert, not just look pretty.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">Web Design</div>
+                    <div class="service-card-desc">Fast, clean sites built to convert, not just look pretty.</div>
+                </div>
             </div>
             <div class="service-card">
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.94s4.18 1.36 4.18 3.85c0 1.89-1.44 2.93-3.12 3.19z"/></svg>
                 </div>
-                <div class="service-card-title">Paid Ads</div>
-                <div class="service-card-desc">Targeted campaigns. Real ROI. No wasted spend.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">Paid Ads</div>
+                    <div class="service-card-desc">Targeted campaigns. Real ROI. No wasted spend.</div>
+                </div>
             </div>
             <div class="service-card">
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                 </div>
-                <div class="service-card-title">SEO</div>
-                <div class="service-card-desc">Get found first. Stay found longer.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">SEO</div>
+                    <div class="service-card-desc">Get found first. Stay found longer.</div>
+                </div>
             </div>
             <div class="service-card">
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M18 4V3c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6h1v4H9v11c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-9h8V4h-3z"/></svg>
                 </div>
-                <div class="service-card-title">Content</div>
-                <div class="service-card-desc">Scroll-stopping photos, video & graphics.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">Content</div>
+                    <div class="service-card-desc">Scroll-stopping photos, video & graphics.</div>
+                </div>
             </div>
             <div class="service-card">
                 <div class="service-card-icon">
                     <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
                 </div>
-                <div class="service-card-title">Branding</div>
-                <div class="service-card-desc">Logos, identity systems & visuals that stick.</div>
+                <div class="service-card-content">
+                    <div class="service-card-title">Branding</div>
+                    <div class="service-card-desc">Logos, identity systems & visuals that stick.</div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- OUR TEAM -->
+    <div class="our-team">
+        <div class="section-label">Our Team</div>
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/matthew-joe-headshot.png" alt="Matthew Joe" class="team-member-photo">
+                <div class="team-member-name">Matthew Joe</div>
+                <div class="team-member-title">Marketing Director</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/michael-woll-headshot.png" alt="Michael Woll" class="team-member-photo">
+                <div class="team-member-name">Michael Woll</div>
+                <div class="team-member-title">Systems Director</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/blake-jaspering-headshot.png" alt="Blake Jaspering" class="team-member-photo">
+                <div class="team-member-name">Blake Jaspering</div>
+                <div class="team-member-title">Content Director</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/courtney-luer-headshot.png" alt="Courtney Luer" class="team-member-photo">
+                <div class="team-member-name">Courtney Luer</div>
+                <div class="team-member-title">Account Executive</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/halle-deragisch-headshot-1.png" alt="Halle DeRagisch" class="team-member-photo">
+                <div class="team-member-name">Halle DeRagisch</div>
+                <div class="team-member-title">Account Executive</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/alex-otoole-headshot.png" alt="Alex O'Toole" class="team-member-photo">
+                <div class="team-member-name">Alex O'Toole</div>
+                <div class="team-member-title">Graphic Designer</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/vick-swedick-headshot.png" alt="Vick Swedick" class="team-member-photo">
+                <div class="team-member-name">Vick Swedick</div>
+                <div class="team-member-title">Content Specialist</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/kris-risner-headshot.png" alt="Kris Risner" class="team-member-photo">
+                <div class="team-member-name">Kris Risner</div>
+                <div class="team-member-title">Web & SEO Specialist</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/vlad-cuc-headshot.png" alt="Vlad Cuc" class="team-member-photo">
+                <div class="team-member-name">Vladimir Cuc</div>
+                <div class="team-member-title">Ads & Tech Specialist</div>
+            </div>
+            <div class="team-card">
+                <img src="https://posted-social.com/wp-content/uploads/2025/11/allison-butler-headshot-1.png" alt="Allison Butler" class="team-member-photo">
+                <div class="team-member-name">Allison Butler</div>
+                <div class="team-member-title">Graphic Designer</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPLORE -->
+    <div class="explore-section">
+        <div class="section-label">Explore</div>
+        <div class="explore-links">
+            <a href="https://posted-social.com/our-story/" target="_blank" rel="noopener" class="explore-link">Our Story <span>&rarr;</span></a>
+            <a href="https://posted-social.com/clients/" target="_blank" rel="noopener" class="explore-link">Our Clients <span>&rarr;</span></a>
+            <a href="https://posted-social.com/why-posted-social/" target="_blank" rel="noopener" class="explore-link">Why Posted Social <span>&rarr;</span></a>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-section">
+        <div class="section-label">Get In Touch</div>
+        <div class="contact-block">
+            <a href="tel:+13149123990" class="contact-item">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                (314) 912-3990
+            </a>
+            <a href="mailto:info@posted-social.com" class="contact-item">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                info@posted-social.com
+            </a>
+            <a href="https://www.google.com/maps/place/Posted+Social/@38.6259036,-90.259349,16z" target="_blank" rel="noopener" class="contact-item">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                1203 Tower Grove Ave, STL
+            </a>
+        </div>
+    </div>
+
+    <!-- SECONDARY CTA -->
+    <div class="cta-wrapper">
+        <a href="https://posted-social.com/" target="_blank" rel="noopener" class="cta-btn secondary">Visit Our Website &rarr;</a>
     </div>
 
     <!-- FOOTER -->
